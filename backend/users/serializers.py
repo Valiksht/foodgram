@@ -197,6 +197,8 @@ class SubscribeSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
         if request is None or request.user.is_anonymous:
             return False
+        if request.user == obj.author:
+            return False
         return Follow.objects.filter(
             user=request.user, author=obj.author
         ).exists()
