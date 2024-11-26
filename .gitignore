@@ -138,5 +138,6 @@ dmypy.json
 .idea
 .vscode
 
+collectes_static/
 static/
 media/
