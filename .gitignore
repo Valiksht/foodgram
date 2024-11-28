@@ -138,7 +138,7 @@ dmypy.json
 .idea
 .vscode
 
-collectes_static/
+collected_static/
 static/
 media/
 
