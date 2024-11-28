@@ -42,21 +42,17 @@ class User(AbstractUser):
     )
     avatar = models.ImageField(
         upload_to='user_images',
-        null=True, blank=True,
-        verbose_name='Аватарка'
+        null=True,
+        blank=True,
+        verbose_name='Аватарка',
+        default=None
     )
     is_admin = models.BooleanField(
         default=False, verbose_name='Админ'
     )
-    follow = models.ManyToManyField(
-        'self',
-        through='Follow',
-        symmetrical=False,
-        related_name='followers'
-    )
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
 
     class Meta:
         ordering = ('username',)

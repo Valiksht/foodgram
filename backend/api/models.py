@@ -19,6 +19,12 @@ class Ingredient(models.Model):
     class Meta:
         verbose_name = 'Ингредиент'
         verbose_name_plural = 'Ингредиенты'
+        constraints = [
+            models.UniqueConstraint(
+                fields=['name', 'measurement_unit'],
+                name='unique_ingredient'
+            )
+        ]
 
     def __str__(self):
         return self.name
@@ -67,7 +73,7 @@ class Recipe(models.Model):
         verbose_name='Время приготовления'
     )
     tags = models.ManyToManyField(
-        Tag, through='RecipeTag', verbose_name='Теги'
+        Tag, verbose_name='Теги', related_name='recipes'
     )
     ingredients = models.ManyToManyField(
         Ingredient,
@@ -83,20 +89,6 @@ class Recipe(models.Model):
         return self.name
 
 
-class RecipeTag(models.Model):
-    """Модель связи рецептов и тегов."""
-
-    tags = models.ForeignKey(
-        Tag, on_delete=models.CASCADE, verbose_name='Теги'
-    )
-    recipe = models.ForeignKey(
-        Recipe, on_delete=models.CASCADE, verbose_name='Рецепты'
-    )
-
-    def __str__(self):
-        return f'{self.recipe} - {self.tags}'
-
-
 class RecipeIngredient(models.Model):
     """Модель связи рецептов и ингредиентов."""
 
@@ -105,7 +97,7 @@ class RecipeIngredient(models.Model):
         on_delete=models.CASCADE,
         verbose_name='Ингредиенты'
     )
-    amount = models.IntegerField(
+    amount = models.PositiveSmallIntegerField(
         verbose_name='Количество ингредиента'
     )
     recipe = models.ForeignKey(
@@ -130,6 +122,12 @@ class BaseShoppingFavorite(models.Model):
 
     class Meta:
         abstract = True
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'recipe'],
+                name='unique_%(class)s'
+            )
+        ]
 
     def __str__(self):
         return f'{self.user} {self.recipe}'

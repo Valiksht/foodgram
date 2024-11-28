@@ -14,7 +14,7 @@ from .serializers import (
     UserSerializer,
     SubscribeSerializer
 )
-from api.filters import LimitPagination
+from api.paginations import LimitPagination
 
 
 User = get_user_model()
@@ -116,6 +116,7 @@ class SubscriptionsViewSet(viewsets.ModelViewSet):
 
     permission_classes = [IsAuthenticated]
     serializer_class = SubscribeSerializer
+    pagination_class = LimitPagination
 
     def get_queryset(self):
         return Follow.objects.filter(user=self.request.user)
@@ -163,13 +164,14 @@ class SelfUserViewSet(viewsets.ModelViewSet):
         )
 
 
-class SubscribeListView(APIView):
-    """ViewSet списка подписок"""
+# class SubscribeListView(APIView):
+#     """ViewSet списка подписок"""
 
-    permission_classes = [IsAuthenticated]
+#     permission_classes = [IsAuthenticated]
+#     pagination_class = LimitPagination
 
-    def get(self, request):
-        user = request.user
-        queryset = User.objects.filter(followers__user=user)
-        serializer = UserSerializer(queryset, many=True)
-        return Response(serializer.data)
+#     def get(self, request):
+#         user = request.user
+#         queryset = User.objects.filter(followers__user=user)
+#         serializer = UserSerializer(queryset, many=True)
+#         return Response(serializer.data)

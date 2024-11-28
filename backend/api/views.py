@@ -24,22 +24,22 @@ from .serializers import (
     ShoppingCartSerializer,
     FavoriteSerializer
 )
-from .filters import IngredientFilter, RecipeFilter, LimitPagination
+from .filters import IngredientFilter, RecipeFilter
+from .paginations import LimitPagination
 from backend.constants import X_CORD, Y_CORD, LINE_STEP
 
 User = get_user_model()
 
 
-class TagViewSet(viewsets.ModelViewSet):
+class TagViewSet(viewsets.ReadOnlyModelViewSet):
     """Вьюсет для работы с тегами."""
 
     serializer_class = TagSerializer
     queryset = Tag.objects.all()
     pagination_class = None
-    http_method_names = ['get']
 
 
-class IngredientViewSet(viewsets.ModelViewSet):
+class IngredientViewSet(viewsets.ReadOnlyModelViewSet):
     """Вьюсет для работы с ингредиентами."""
 
     serializer_class = IngredientSerializer
@@ -47,7 +47,6 @@ class IngredientViewSet(viewsets.ModelViewSet):
     pagination_class = None
     filter_backends = [DjangoFilterBackend]
     filterset_class = IngredientFilter
-    http_method_names = ['get']
 
 
 class RecipeViewSet(viewsets.ModelViewSet):

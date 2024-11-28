@@ -1,4 +1,3 @@
-from rest_framework.pagination import PageNumberPagination
 from django_filters.rest_framework import (
     FilterSet,
     CharFilter,
@@ -8,10 +7,6 @@ from django_filters.rest_framework import (
 
 from .models import Ingredient, Recipe, Tag
 
-
-class LimitPagination(PageNumberPagination):
-    page_size_query_param = 'limit'
-    page_size = 6
 
 
 class IngredientFilter(FilterSet):
