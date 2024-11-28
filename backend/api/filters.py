@@ -8,7 +8,6 @@ from django_filters.rest_framework import (
 from .models import Ingredient, Recipe, Tag
 
 
-
 class IngredientFilter(FilterSet):
     name = CharFilter(field_name='name', lookup_expr='startswith')
 
