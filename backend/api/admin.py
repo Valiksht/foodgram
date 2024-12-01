@@ -13,6 +13,7 @@ class IngredientResource(resources.ModelResource):
 class IngredientAdmin(ImportExportModelAdmin):
     resource_class = IngredientResource
     list_display = ('name', 'measurement_unit')
+    search_fields = ('name',)
 
 
 class TagResource(resources.ModelResource):
@@ -26,8 +27,10 @@ class TagAdmin(ImportExportModelAdmin):
 
 
 class RecipeAdmin(admin.ModelAdmin):
-    list_display = ('name', 'author', 'text', 'cooking_time')
+    list_display = ('name', 'author')
     list_display_links = ('name', 'author')
+    search_fields = ('name', 'author')
+    list_filter = ('tags',)
 
 
 class ShoppingCartAdmin(admin.ModelAdmin):
